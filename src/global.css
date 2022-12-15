@@ -139,3 +139,16 @@ body {
 .footer__link-name {
     margin-right: 10px;
 }
+
+.header_basket{
+    width: 5%;
+    height: 80%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background-image: url(assets/cart.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    justify-content: center;
+}
