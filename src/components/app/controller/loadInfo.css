@@ -31,6 +31,12 @@
     border-radius: 0px 15px;
 	background: rgba(37,219,237,0.8);
     width: 100%;
+    opacity: 0;
+}
+
+.div-item:hover .product{
+    opacity: 1;
+    transition: .5s ease;
 }
 
 .div-buttons button{
