@@ -68,6 +68,18 @@ body {
     font-size: 24px;
 }
 
+.header_basket{
+    width: 90px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    background-image: url(assets/cart.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    justify-content: center;
+}
+
 .main {
     margin-bottom: 15px;
 }
@@ -140,15 +152,6 @@ body {
     margin-right: 10px;
 }
 
-.header_basket{
-    width: 5%;
-    height: 80%;
+a, button, .header_basket{
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    background-image: url(assets/cart.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    justify-content: center;
 }
