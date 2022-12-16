@@ -16,10 +16,13 @@ async function getProducts() {
         divItem.classList.add("div-item");
 
         for (let key in item){
+            if (key !== 'thumbnail' && key !== 'images') {
             let divProduct = document.createElement("div");
             divProduct.innerHTML = `<div class="${key}">${data.products[i][key]}</div>`;
             divItem.appendChild(divProduct);
+            divItem.style.backgroundImage = `url('${data.products[i].images[0]}')`;
             divProduct.classList.add(`product-${data.products[i].id}`);
+            }
         }
     }
 }
