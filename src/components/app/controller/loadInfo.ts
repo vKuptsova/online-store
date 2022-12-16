@@ -1,3 +1,5 @@
+import './loadInfo.css';
+
 async function getProducts() {
     const url:string = `https://dummyjson.com/products?limit=100`;
     const res = await fetch(url);
@@ -14,14 +16,15 @@ async function getProducts() {
         const divItem = document.createElement("div");
         divProducts.appendChild(divItem);
         divItem.classList.add("div-item");
+        divItem.classList.add(`item-${data.products[i].id}`)
+        let divProduct = document.createElement("div");
+        divProduct.classList.add("product");
 
         for (let key in item){
-            if (key !== 'thumbnail' && key !== 'images') {
-            let divProduct = document.createElement("div");
-            divProduct.innerHTML = `<div class="${key}">${data.products[i][key]}</div>`;
+            if (key !== 'thumbnail' && key !== 'images' && key !== 'id') {
+            divProduct.innerHTML += `<div class="${key}">${key.toUpperCase()}: ${data.products[i][key]}</div>`;
             divItem.appendChild(divProduct);
             divItem.style.backgroundImage = `url('${data.products[i].images[0]}')`;
-            divProduct.classList.add(`product-${data.products[i].id}`);
             }
         }
     }
