@@ -27,6 +27,11 @@ async function getProducts() {
             divItem.style.backgroundImage = `url('${data.products[i].images[0]}')`;
             }
         }
+
+        let divButtons = document.createElement("div");
+        divButtons.innerHTML = `<button class="btn1-${data.products[i].id}">ADD TO CART</button><button class="btn2-${data.products[i].id}">DETAILS</button>`;
+        divProduct.appendChild(divButtons);
+        divItem.classList.add("div-buttons");
     }
 }
 

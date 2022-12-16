@@ -21,10 +21,29 @@
     background-position: inherit;
     margin: 5px;
     font-size: 7px;
+    color:#001b48;
+    font-weight:bold;
 }
 
 .product{
-    padding: 1px 10px;
+    padding-top: 30px;
+    padding: 5px 10px;
     border-radius: 0px 15px;
 	background: rgba(37,219,237,0.8);
+    width: 100%;
+}
+
+.div-buttons button{
+    border: 2px solid #97cbdc;
+    border-radius: 0 15px;
+    background-color: #001b48;
+    color: #97cbdc;
+    height:20px;
+    width: 90px;
+    font-size: 10px;
+}
+
+.div-buttons{
+    display: flex;
+    align-items: flex-end;
 }
