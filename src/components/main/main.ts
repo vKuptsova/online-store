@@ -1,9 +1,9 @@
 import Page from '../../core/templates/page';
 import Filters from './filters/filter';
-import products from '../../products';
 import { Product } from '../../types/product.model';
 import Sorting from './sorting/sorting';
 import { FiltersOptions } from '../../types/filters-options.model';
+import Store from '../../models/store';
 
 const createProductsBlockMarkup = () => {
     return `<div class="products__header">
@@ -24,11 +24,12 @@ class MainPage extends Page {
     }
 
     render() {
+        // console.log('Store.getProducts()', Store.getProducts());
         const mainSection = document.createElement('div');
         mainSection.classList.add('main__block');
         (mainSection as HTMLElement).append(this.renderProductsSection());
 
-        this.filters.init(this.getFiltersOptions(products), mainSection);
+        this.filters.init(this.getFiltersOptions(Store.getProducts()), mainSection);
         const productsHeaderBlock = (mainSection as HTMLElement).querySelector('.products__header');
         this.sorting.init(productsHeaderBlock);
 
