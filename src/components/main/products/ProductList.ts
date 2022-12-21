@@ -1,4 +1,5 @@
-import Products from './Products';
+import Products from '../../../model/Products';
+import './ProductList.css';
 
 class ProductList {
 
@@ -6,21 +7,24 @@ class ProductList {
         const data = new Products();
         const card = data.start();
 
-        const divProducts = document.createElement('ul');
-        divProducts.classList.add('items');
-        (element as HTMLElement).append(divProducts);
+        const ulProducts = document.createElement('ul');
+        ulProducts.classList.add('items');
+        (element as HTMLElement).append(ulProducts);
 
         card.then(
             function (result) {
                 for (const key in result) {
                     const liItem = document.createElement('li');
-                    divProducts.appendChild(liItem);
+                    ulProducts.appendChild(liItem);
                     liItem.classList.add('li-item');
                     liItem.classList.add(`item-${key}`);
+                    const divProduct = document.createElement('div');
+                    divProduct.classList.add('product');
 
                     for (const key2 in result[key]) {
                         if(key2 !== 'thumbnail' && key2 !== 'images' && key2 !== 'id'){
-                            liItem.innerHTML += `<p class="${key2}">${key2.toUpperCase()}: ${result[key][key2]}</p>`;
+                            divProduct.innerHTML += `<p class="${key2}">${key2.toUpperCase()}: ${result[key][key2]}</p>`;
+                            liItem.appendChild(divProduct);
                             liItem.style.backgroundImage = `url('${result[key].images[0]}')`;
                         }
                     }

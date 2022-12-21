@@ -4,7 +4,7 @@ import products from '../../products';
 import { Product } from '../../types/product.model';
 import Sorting from './sorting/sorting';
 import { FiltersOptions } from '../../types/filters-options.model';
-import ProductList from '../../model/ProductList';
+import ProductList from './products/ProductList';
 
 const createProductsBlockMarkup = () => {
     return `<div class="products__header">
