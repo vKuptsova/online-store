@@ -6,10 +6,10 @@ export default class Store {
     constructor() {}
 
     static setProducts(products: Product[]) {
-        this.products = products;
+        Store.products = products;
     }
 
     static getProducts(): Product[] {
-        return this.products;
+        return Store.products;
     }
 }

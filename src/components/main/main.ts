@@ -10,7 +10,7 @@ const createProductsBlockMarkup = () => {
                      <p class="products__quantity">Found: <span class="products__quantity-value"></span></p>
                      <input class="products__search" type="text" placeholder="Enter product name">
                 </div>
-                <div class="products-cards"></div>`;
+                <ul class="products-cards"></ul>`;
 };
 
 class MainPage extends Page {
@@ -24,7 +24,6 @@ class MainPage extends Page {
     }
 
     render() {
-        // console.log('Store.getProducts()', Store.getProducts());
         const mainSection = document.createElement('div');
         mainSection.classList.add('main__block');
         (mainSection as HTMLElement).append(this.renderProductsSection());
@@ -33,7 +32,8 @@ class MainPage extends Page {
         const productsHeaderBlock = (mainSection as HTMLElement).querySelector('.products__header');
         this.sorting.init(productsHeaderBlock);
 
-        // const productsCardsBlock = (mainSection as HTMLElement).querySelector('.products-cards');
+        const productsCardsBlock = (mainSection as HTMLElement).querySelector('.products-cards');
+        // this.products.init(Store.getProducts(), productsCardsBlock);
 
         // Здесь должны отдаваться разметка всех карточек для рендера. В блок products-cards Передавать в метод рендера
         // класса productsCardsBlock и туда закидывать карточки
