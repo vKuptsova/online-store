@@ -4,6 +4,7 @@ import products from '../../products';
 import { Product } from '../../types/product.model';
 import Sorting from './sorting/sorting';
 import { FiltersOptions } from '../../types/filters-options.model';
+import ProductList from '../../model/ProductList';
 
 const createProductsBlockMarkup = () => {
     return `<div class="products__header">
@@ -32,11 +33,9 @@ class MainPage extends Page {
         const productsHeaderBlock = (mainSection as HTMLElement).querySelector('.products__header');
         this.sorting.init(productsHeaderBlock);
 
-        // const productsCardsBlock = (mainSection as HTMLElement).querySelector('.products-cards');
-
-        // Здесь должны отдаваться разметка всех карточек для рендера. В блок products-cards Передавать в метод рендера
-        // класса productsCardsBlock и туда закидывать карточки
-        // Но до этого получить данные с бэка на уровне main.page и пока где-то здесь сохранить в переменной
+        const productsCardsBlock = (mainSection as HTMLElement).querySelector('.products-cards');
+        const cards = new ProductList();
+        cards.drowCards(productsCardsBlock);
 
         this.container.append(mainSection);
         return this.container;
