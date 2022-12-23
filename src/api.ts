@@ -1,5 +1,3 @@
-import Store from './models/store';
-
 const PRODUCTS_URL = `https://dummyjson.com/products?limit=100`;
 
 const checkStatus = (response: Response) => {
@@ -12,16 +10,9 @@ const checkStatus = (response: Response) => {
 
 export default class API {
     getProducts() {
-        return this.load()
-            .then((response) => response.json())
-            .then((response) => {
-                Store.setProducts(response.products);
-            });
-    }
-
-    load() {
         return fetch(PRODUCTS_URL, { method: 'get' })
             .then(checkStatus)
+            .then((response) => response.json())
             .catch((err) => {
                 throw err;
             });

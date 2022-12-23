@@ -1,4 +1,4 @@
-export interface FiltersOptions {
+export interface IFiltersOptions {
     categories: string[];
     brands: string[];
     price: Price;

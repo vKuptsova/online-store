@@ -1,19 +1,15 @@
-import Page from '../../core/templates/page';
+import Page from '../../templates/page';
 import MainPage from '../main/main';
 import { PageIds } from '../../constants';
 import ProductPage from '../product/product';
 import BasketPage from '../basket/basket';
 import ErrorPage, { ErrorTypes } from '../error/error';
-import API from '../../api';
 
 class App {
     private static container: HTMLElement = document.body;
     private static defaultPageId = 'current-page';
-    private api: API;
 
-    constructor() {
-        this.api = new API();
-    }
+    constructor() {}
 
     static renderNewPage(idPage: string) {
         const currentPageHTML = document.querySelector(`#${App.defaultPageId}`);
@@ -55,11 +51,9 @@ class App {
     }
 
     public run(id: string): void {
-        this.api.getProducts().then(() => {
-            App.renderNewPage(id);
-            window.location.hash = id;
-            this.enableRouteChange();
-        });
+        App.renderNewPage(id);
+        window.location.hash = id;
+        this.enableRouteChange();
     }
 }
 export default App;
