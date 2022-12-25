@@ -1,7 +1,7 @@
 import Page from '../../templates/page';
-import Filters from './filters/filter';
+import Filters from '../../components/filters/filter';
 import { IProduct } from '../../types/product.model';
-import Sorting from './sorting/sorting';
+import Sorting from '../../components/sorting/sorting';
 import { IFiltersOptions } from '../../types/filters-options.model';
 import API from '../../api';
 

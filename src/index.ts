@@ -1,5 +1,5 @@
 import './global.css';
-import App from '../src/components/app/app';
+import App from './app/app';
 import { PageIds } from './constants';
 
 const app = new App();

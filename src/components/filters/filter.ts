@@ -1,5 +1,5 @@
 import './filter.css';
-import { IFiltersOptions } from '../../../types/filters-options.model';
+import { IFiltersOptions } from '../../types/filters-options.model';
 
 const createFiltersMainMarkup = () => {
     return `<div class="filters__button">
