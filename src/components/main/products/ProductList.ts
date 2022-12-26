@@ -3,15 +3,15 @@ import './ProductList.css';
 
 class ProductList {
 
-    drowCards(element: Element | null): void {
-        const data = new Products();
-        const card = data.start();
+    drawCards(element: Element | null): void {
+        const productModel = new Products();
+        const productsPromise = productModel.start();
 
         const ulProducts = document.createElement('ul');
         ulProducts.classList.add('items');
         (element as HTMLElement).append(ulProducts);
 
-        card.then(
+        productsPromise.then(
             function (result) {
                 for (const key in result) {
                     const liItem = document.createElement('li');

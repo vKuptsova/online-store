@@ -35,7 +35,7 @@ class MainPage extends Page {
 
         const productsCardsBlock = (mainSection as HTMLElement).querySelector('.products-cards');
         const cards = new ProductList();
-        cards.drowCards(productsCardsBlock);
+        cards.drawCards(productsCardsBlock);
 
         this.container.append(mainSection);
         return this.container;
