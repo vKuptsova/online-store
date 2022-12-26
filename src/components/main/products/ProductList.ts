@@ -22,8 +22,9 @@ class ProductList {
                     divProduct.classList.add('product');
 
                     for (const key2 in result[key]) {
+                        const res = result[key];
                         if(key2 !== 'thumbnail' && key2 !== 'images' && key2 !== 'id'){
-                            divProduct.innerHTML += `<p class="${key2}">${key2.toUpperCase()}: ${result[key][key2]}</p>`;
+                            divProduct.innerHTML += `<p class="${key2}">${key2.toUpperCase()}: ${result[key][key2 as keyof typeof res]}</p>`;
                             liItem.appendChild(divProduct);
                             liItem.style.backgroundImage = `url('${result[key].images[0]}')`;
                         }
