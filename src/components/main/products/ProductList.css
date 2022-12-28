@@ -2,7 +2,7 @@
     border: 4px solid #97cbdc;
     border-radius: 0 15px;
     background-color: #001b48;
-    width: 80%;
+    width: 100%;
     display:flex;
     flex-wrap: wrap;
     justify-content: space-around;
@@ -10,9 +10,9 @@
 
 .li-item {
     flex: 1 0 20%;
-    min-width: 250px;
+    min-width: 200px;
+    min-height: 160px;
     max-width: 20%;
-    min-height: 180px;
     border: 2px solid #97cbdc;
     border-radius: 0 15px;
     background-color: #001b48;
@@ -24,6 +24,14 @@
     color:#001b48;
     font-weight:bold;
     list-style-type: none;
+    position: relative;
+}
+
+.li-item img{
+    min-width: 200px;
+    max-width: 20%;
+    height: 160px;
+    border-radius: 0 15px;
 }
 
 .product{
@@ -33,6 +41,12 @@
 	background: rgba(37,219,237,0.8);
     max-width: 250px;
     opacity: 0;
+    position: absolute;
+}
+
+.product p{
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
 }
 
 .li-item:hover .product, .li-item:hover .div-buttons{
@@ -55,4 +69,7 @@
     opacity: 0;
     display: flex;
     align-items: flex-end;
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
 }

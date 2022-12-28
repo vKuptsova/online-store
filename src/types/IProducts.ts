@@ -1,8 +1,8 @@
-import {Product} from './product.model'
+import {IProduct} from './product.model'
 
 export interface IProducts {
     limit: number;
-    products: Array<Product>;
+    products: Array<IProduct>;
     skip: number;
     total: number;
 }
