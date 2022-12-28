@@ -9,7 +9,6 @@ abstract class Page {
     }
 
     render() {
-        console.log('this.container');
         return this.container;
     }
 }

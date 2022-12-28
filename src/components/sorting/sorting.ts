@@ -1,5 +1,5 @@
 import './sorting.css';
-import { SORTING_ITEMS } from '../../../constants';
+import { SORTING_ITEMS } from '../../constants';
 
 const createSortingMarkup = (name: string) => {
     return `<option value="${name}">${name}</option>`;

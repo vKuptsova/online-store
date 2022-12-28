@@ -1,13 +1,15 @@
-import Page from '../../core/templates/page';
-import MainPage from '../main/main';
-import { PageIds } from '../../constants';
-import ProductPage from '../product/product';
-import BasketPage from '../basket/basket';
-import ErrorPage, { ErrorTypes } from '../error/error';
+import Page from '../templates/page';
+import MainPage from '../pages/main/main';
+import { PageIds } from '../constants';
+import ProductPage from '../pages/product/product';
+import BasketPage from '../pages/basket/basket';
+import ErrorPage, { ErrorTypes } from '../pages/error/error';
 
 class App {
     private static container: HTMLElement = document.body;
     private static defaultPageId = 'current-page';
+
+    constructor() {}
 
     static renderNewPage(idPage: string) {
         const currentPageHTML = document.querySelector(`#${App.defaultPageId}`);

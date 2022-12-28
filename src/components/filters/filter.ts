@@ -1,5 +1,5 @@
 import './filter.css';
-import { FiltersOptions } from '../../../types/filters-options.model';
+import { IFiltersOptions } from '../../types/filters-options.model';
 
 const createFiltersMainMarkup = () => {
     return `<div class="filters__button">
@@ -40,7 +40,7 @@ const createRangeSliderMarkup = (min: number, max: number, isPriceBlock: boolean
 };
 
 class Filters {
-    init({ categories, brands, price, stock }: FiltersOptions, mainBlock: Element | null): void {
+    init({ categories, brands, price, stock }: IFiltersOptions, mainBlock: Element | null): void {
         this.appendFiltersBlock(mainBlock);
 
         const filtersCategoryList = (mainBlock as HTMLElement).querySelector('.filters-list--category');

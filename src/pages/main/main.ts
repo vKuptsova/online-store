@@ -1,43 +1,62 @@
-import Page from '../../core/templates/page';
-import Filters from './filters/filter';
-import products from '../../products';
-import { Product } from '../../types/product.model';
-import Sorting from './sorting/sorting';
-import { FiltersOptions } from '../../types/filters-options.model';
-import ProductList from './products/ProductList';
+
+import API from '../../api';
+import { IFiltersOptions } from '../../types/filters-options.model';
+import Sorting from '../../components/sorting/sorting';
+import { IProduct } from '../../types/product.model';
+import Filters from '../../components/filters/filter';
+import Page from '../../templates/page';
 
 const createProductsBlockMarkup = () => {
     return `<div class="products__header">
                      <p class="products__quantity">Found: <span class="products__quantity-value"></span></p>
                      <input class="products__search" type="text" placeholder="Enter product name">
                 </div>
-                <div class="products-cards"></div>`;
+                <ul class="products-cards"></ul>`;
 };
 
 class MainPage extends Page {
     public filters: Filters;
     public sorting: Sorting;
+    public api: API;
+    public products: IProduct[];
 
     constructor(id: string) {
         super(id);
         this.filters = new Filters();
         this.sorting = new Sorting();
+        this.api = new API();
+        this.products = [];
+    }
+
+    getDataForMainPage() {
+        this.api.getProducts().then((products) => {
+            this.products = products;
+        });
     }
 
     render() {
-        const mainSection = document.createElement('div');
-        mainSection.classList.add('main__block');
-        (mainSection as HTMLElement).append(this.renderProductsSection());
+        this.api.getProducts().then((response) => {
+            this.products = response.products;
+            const mainSection = document.createElement('div');
+            mainSection.classList.add('main__block');
+            (mainSection as HTMLElement).append(this.renderProductsSection());
 
-        this.filters.init(this.getFiltersOptions(products), mainSection);
-        const productsHeaderBlock = (mainSection as HTMLElement).querySelector('.products__header');
-        this.sorting.init(productsHeaderBlock);
+            this.filters.init(this.getFiltersOptions(this.products), mainSection);
+            const productsHeaderBlock = (mainSection as HTMLElement).querySelector('.products__header');
+            this.sorting.init(productsHeaderBlock);
 
         const productsCardsBlock = (mainSection as HTMLElement).querySelector('.products-cards');
         const cards = new ProductList();
         cards.drawCards(productsCardsBlock);
+            const productsCardsBlock = (mainSection as HTMLElement).querySelector('.products-cards');
+            // this.products.init(Store.getProducts(), productsCardsBlock);
 
-        this.container.append(mainSection);
+            // Здесь должны отдаваться разметка всех карточек для рендера. В блок products-cards Передавать в метод рендера
+            // класса productsCardsBlock и туда закидывать карточки
+            // Но до этого получить данные с бэка на уровне main.page и пока где-то здесь сохранить в переменной
+
+            this.container.append(mainSection);
+        });
         return this.container;
     }
 
@@ -49,7 +68,7 @@ class MainPage extends Page {
         return productsSection;
     }
 
-    getFiltersOptions(products: Product[]): FiltersOptions {
+    getFiltersOptions(products: IProduct[]): IFiltersOptions {
         const categories = [
             ...new Set(
                 products.reduce((result: string[], product) => {
