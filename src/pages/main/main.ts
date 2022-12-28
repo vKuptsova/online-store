@@ -1,4 +1,4 @@
-
+import ProductList from '../../components/main/products/ProductList';
 import API from '../../api';
 import { IFiltersOptions } from '../../types/filters-options.model';
 import Sorting from '../../components/sorting/sorting';
@@ -44,17 +44,9 @@ class MainPage extends Page {
             this.filters.init(this.getFiltersOptions(this.products), mainSection);
             const productsHeaderBlock = (mainSection as HTMLElement).querySelector('.products__header');
             this.sorting.init(productsHeaderBlock);
-
-        const productsCardsBlock = (mainSection as HTMLElement).querySelector('.products-cards');
-        const cards = new ProductList();
-        cards.drawCards(productsCardsBlock);
             const productsCardsBlock = (mainSection as HTMLElement).querySelector('.products-cards');
-            // this.products.init(Store.getProducts(), productsCardsBlock);
-
-            // Здесь должны отдаваться разметка всех карточек для рендера. В блок products-cards Передавать в метод рендера
-            // класса productsCardsBlock и туда закидывать карточки
-            // Но до этого получить данные с бэка на уровне main.page и пока где-то здесь сохранить в переменной
-
+            const cards = new ProductList();
+            cards.drawCards(productsCardsBlock);
             this.container.append(mainSection);
         });
         return this.container;
