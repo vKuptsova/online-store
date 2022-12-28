@@ -20,15 +20,16 @@ const baseConfig = {
             {
                 test: /\.(png|svg|jpg|jpeg|gif)$/i,
                 type: 'asset/resource',
-              },
+            },
         ],
     },
     resolve: {
         extensions: ['.ts', '.js'],
     },
     output: {
-        filename: 'index.js',
-        path: path.resolve(__dirname, '../dist'),
+        filename: 'bundle.js',
+        path: path.resolve(__dirname, 'build'),
+        clean: true,
         assetModuleFilename: 'assets/[name][ext]',
     },
     plugins: [
