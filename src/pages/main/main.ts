@@ -1,9 +1,10 @@
-import Page from '../../templates/page';
-import Filters from '../../components/filters/filter';
-import { IProduct } from '../../types/product.model';
-import Sorting from '../../components/sorting/sorting';
-import { IFiltersOptions } from '../../types/filters-options.model';
+
 import API from '../../api';
+import { IFiltersOptions } from '../../types/filters-options.model';
+import Sorting from '../../components/sorting/sorting';
+import { IProduct } from '../../types/product.model';
+import Filters from '../../components/filters/filter';
+import Page from '../../templates/page';
 
 const createProductsBlockMarkup = () => {
     return `<div class="products__header">
@@ -44,6 +45,9 @@ class MainPage extends Page {
             const productsHeaderBlock = (mainSection as HTMLElement).querySelector('.products__header');
             this.sorting.init(productsHeaderBlock);
 
+        const productsCardsBlock = (mainSection as HTMLElement).querySelector('.products-cards');
+        const cards = new ProductList();
+        cards.drawCards(productsCardsBlock);
             const productsCardsBlock = (mainSection as HTMLElement).querySelector('.products-cards');
             // this.products.init(Store.getProducts(), productsCardsBlock);
 
