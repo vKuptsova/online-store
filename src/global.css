@@ -77,6 +77,14 @@ body {
     font-size: 24px;
 }
 
+.header_link {
+    cursor: pointer;
+}
+
+.header_link:hover {
+    opacity: 0.6;
+}
+
 .main {
     margin-bottom: 15px;
     padding-top: 15px;

@@ -1,0 +1,122 @@
+.product {
+    display: flex;
+    flex-direction: column;
+}
+
+.product h2 {
+    margin: 0 0 5px 0;
+    padding: 5px;
+    text-align: center;
+    border: 2px solid #001b48;
+    border-radius: 15px;
+    color: #2f72e3;
+    font-weight: 700;
+}
+
+.product-block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    border: 2px solid #001b48;
+    border-radius: 15px;
+}
+
+.product__content {
+    display: flex;
+    justify-content: space-between;
+}
+
+.product__content-images {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 10px 0;
+    padding-right: 10px;
+    list-style: none;
+}
+
+.product__content-images li img {
+    margin: 0 0 5px 0;
+    padding: 0;
+    border: 2px solid #001b48;
+    border-radius: 15px;
+    cursor: pointer;
+}
+
+.product__content img {
+    margin-right: 10px;
+    display: block;
+    margin-top: auto;
+    margin-bottom: auto;
+    border: 2px solid #001b48;
+    border-radius: 15px;
+}
+
+.product__content-detail {
+    width: 500px;
+    margin: 0;
+    padding: 10px 0  0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    list-style: none;
+}
+
+.product__content-detail li {
+    padding: 10px;
+    margin: 0 0 15px 0;
+    text-align: center;
+    border: 2px solid #001b48;
+    border-radius: 15px;
+}
+
+.product__content-detail li h3 {
+    padding-bottom: 5px;
+    text-decoration: underline #30c5ff;
+    color: #001b48;
+    margin: 0;
+}
+
+.product__content-detail li p {
+    padding-bottom: 5px;
+    color: #001b48;
+    margin: 0;
+}
+
+.product__price {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.product__price button {
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    border: 2px solid #001b48;
+    border-radius: 10px;
+    background-color: #97cbdc;
+    color: #001b48;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.product__price-title {
+    position: relative;
+    padding-left: 35px;
+    font-size: 44px;
+    line-height: 44px;
+    margin-bottom: 30px;
+    color: #2f72e3;
+    font-weight: 700;
+}
+
+.product__price-title:before {
+    position: absolute;
+    content: "$";
+    top: 5px;
+    left: 0;
+    font-size: 40px;
+}
