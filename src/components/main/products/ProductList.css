@@ -6,6 +6,7 @@
     display:flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    box-sizing: border-box;
 }
 
 .li-item {
@@ -45,8 +46,8 @@
 }
 
 .product p{
-    margin-top: 0.5em;
-    margin-bottom: 0.5em;
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
 }
 
 .li-item:hover .product, .li-item:hover .div-buttons{
