@@ -70,7 +70,7 @@ class ProductPage extends Page {
     render() {
         this.api.getProductById(this.productId).then((product) => {
             const productSection = document.createElement('article');
-            productSection.classList.add('product');
+            productSection.classList.add('product-item');
             (productSection as HTMLElement).innerHTML = createProductMarkup(product);
             const productContentImages = productSection.querySelector('.product__content-images');
             const imagesMarkup = product.images.map((item: string) => createProductImagesMarkup(item)).join(`\n`);

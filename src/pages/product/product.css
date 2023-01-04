@@ -1,9 +1,9 @@
-.product {
+.product-item {
     display: flex;
     flex-direction: column;
 }
 
-.product h2 {
+.product-item h2 {
     margin: 0 0 5px 0;
     padding: 5px;
     text-align: center;

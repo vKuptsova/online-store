@@ -1,4 +1,5 @@
 .items {
+    box-sizing: border-box;
     border: 4px solid #97cbdc;
     border-radius: 0 15px;
     background-color: #001b48;
@@ -72,4 +73,11 @@
     position: absolute;
     bottom: 8px;
     left: 16px;
+}
+
+.empty-list {
+    margin-top: 40px;
+    font-size: 28px;
+    color: #001b48;
+    text-align: center;
 }
