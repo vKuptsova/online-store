@@ -1,5 +1,6 @@
 import { IProduct } from '../../../types/product.model';
-import './ProductList.css';
+import './product-list.css';
+import { PageIds } from '../../../constants';
 
 class ProductList {
     drawCards(element: Element | null, products: IProduct[]): void {
@@ -11,7 +12,7 @@ class ProductList {
             const liItem = document.createElement('li');
             ulProducts.appendChild(liItem);
             liItem.classList.add('li-item');
-            liItem.classList.add(`item-${product.id}`);
+            liItem.setAttribute('data-value', `${product.id}`);
             const divProduct = document.createElement('div');
             divProduct.classList.add('product');
 
@@ -30,10 +31,22 @@ class ProductList {
             divButtons.classList.add('div-buttons');
             liItem.innerHTML += `<img src="${product.images[0]}" alt="image">`;
         });
+
+        this.onCardClick(ulProducts);
+    }
+
+    onCardClick(mainBlock: Element | null): void {
+        const cards = mainBlock?.querySelectorAll('.li-item');
+        (cards as NodeListOf<HTMLElement>).forEach((card) =>
+            card.addEventListener('click', () => {
+                const cardId = card.getAttribute('data-value');
+                window.location.hash = `${PageIds.ProductPage}/${cardId}`;
+            })
+        );
     }
 
     renderEmptyBlock(element: Element | null): void {
-        (element as HTMLElement).innerHTML = '<p class="empty-list">No products were found</p>';
+        (element as HTMLElement).innerHTML = '<p class="empty-list">No product-list were found</p>';
     }
 }
 

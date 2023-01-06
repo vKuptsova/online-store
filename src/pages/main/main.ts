@@ -1,4 +1,4 @@
-import ProductList from '../../components/main/products/ProductList';
+import ProductList from '../../components/main/product-list/product-list';
 import API from '../../api';
 import { IFiltersOptions } from '../../types/filters-options.model';
 import Sorting from '../../components/sorting/sorting';
@@ -6,7 +6,6 @@ import { IProduct } from '../../types/product.model';
 import Filters from '../../components/filters/filter';
 import Page from '../../templates/page';
 import { SORT_TYPE } from '../../constants';
-import product from '../product/product';
 
 const createProductsBlockMarkup = () => {
     return `<div class="products__header">
@@ -70,7 +69,7 @@ class MainPage extends Page {
 
     onSortTypeChange(productsCardsBlock: Element | null): void {
         const sortOptions = document.querySelector('.sorting-select');
-        (sortOptions as HTMLElement).addEventListener('change', (event) => {
+        (sortOptions as HTMLElement)?.addEventListener('change', (event) => {
             this.sortType = (sortOptions as HTMLSelectElement).value;
             (productsCardsBlock as HTMLElement).innerHTML = '';
             this.productList.drawCards(productsCardsBlock, this.getSortedProducts());
@@ -79,7 +78,7 @@ class MainPage extends Page {
 
     onSearchProducts(productsCardsBlock: Element | null, productQuantity: Element | null): void {
         const productsSearch = document.querySelector('.products__search');
-        (productsSearch as HTMLElement).addEventListener('input', (event) => {
+        (productsSearch as HTMLElement)?.addEventListener('input', (event) => {
             const searchValue = (event.target as HTMLInputElement).value;
             (productsCardsBlock as HTMLElement).innerHTML = '';
             if (searchValue !== '') {
