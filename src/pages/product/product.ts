@@ -2,6 +2,7 @@ import Page from '../../templates/page';
 import { IProduct } from '../../types/product.model';
 import './product.css';
 import API from '../../api';
+import Popup from '../../components/popup/popup';
 
 const createProductMarkup = ({
     category,
@@ -61,10 +62,13 @@ const createProductImagesMarkup = (image: string): string => {
 class ProductPage extends Page {
     public api: API;
     public productId: string;
+    public popup: Popup;
+
     constructor(id: string, productId: string) {
         super(id);
         this.productId = productId;
         this.api = new API();
+        this.popup = new Popup();
     }
 
     render() {
@@ -77,6 +81,7 @@ class ProductPage extends Page {
             (productContentImages as HTMLElement).innerHTML = imagesMarkup;
             this.container.append(productSection);
             this.onProductImageClick(productSection);
+            this.onBuyButtonClick(productSection);
         });
 
         return this.container;
@@ -90,6 +95,18 @@ class ProductPage extends Page {
                 (mainImage as HTMLImageElement).src = (event.target as HTMLImageElement)?.currentSrc;
             })
         );
+    }
+
+    onBuyButtonClick(productSection: HTMLElement): void {
+        const buyButton = productSection.querySelector('.product__price-button-buy');
+        (buyButton as HTMLElement).addEventListener('click', () => {
+            this.popup.toggleCardPopup();
+        });
+
+        const closePopupButton = document.querySelector('.popup-close');
+        (closePopupButton as HTMLElement).addEventListener('click', () => {
+            this.popup.toggleCardPopup();
+        });
     }
 }
 
