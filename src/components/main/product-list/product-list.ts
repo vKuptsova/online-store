@@ -46,7 +46,7 @@ class ProductList {
     }
 
     renderEmptyBlock(element: Element | null): void {
-        (element as HTMLElement).innerHTML = '<p class="empty-list">No product-list were found</p>';
+        (element as HTMLElement).innerHTML = '<p class="empty-list">No products were found</p>';
     }
 }
 
