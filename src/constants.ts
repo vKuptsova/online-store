@@ -21,3 +21,10 @@ export const enum PageIds {
     ProductPage = 'product-page',
     BasketPage = 'basket-page',
 }
+
+export const enum FILTER_TYPE {
+    BRAND = 'brand',
+    CATEGORY = 'category',
+    PRICE = 'price',
+    STOCK = 'stock',
+}

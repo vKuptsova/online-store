@@ -48,14 +48,16 @@ class App {
     public toBasketPage(): void {
         const basketLink = document.querySelector('.header_basket-link');
         (basketLink as HTMLElement).addEventListener('click', () => {
-            this.run(PageIds.BasketPage);
+            window.location.hash = PageIds.BasketPage;
+            App.renderNewPage(PageIds.BasketPage);
         });
     }
 
     public toMainPage(): void {
         const mainPageLink = document.querySelector('.header_link');
         (mainPageLink as HTMLElement).addEventListener('click', () => {
-            this.run(PageIds.MainPage);
+            window.location.hash = PageIds.MainPage;
+            App.renderNewPage(PageIds.MainPage);
         });
     }
 

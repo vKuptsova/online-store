@@ -1,4 +1,4 @@
-import ProductList from '../../components/main/products/ProductList';
+import ProductList from '../../components/main/product-list/product-list';
 import API from '../../api';
 import { IFiltersOptions } from '../../types/filters-options.model';
 import Sorting from '../../components/sorting/sorting';
@@ -6,7 +6,6 @@ import { IProduct } from '../../types/product.model';
 import Filters from '../../components/filters/filter';
 import Page from '../../templates/page';
 import { SORT_TYPE } from '../../constants';
-import product from '../product/product';
 
 const createProductsBlockMarkup = () => {
     return `<div class="products__header">
@@ -27,6 +26,7 @@ class MainPage extends Page {
     public foundedProducts: IProduct[];
 
     public sortType = SORT_TYPE.PRICE_ASC;
+    // public url: URL;
 
     constructor(id: string) {
         super(id);
@@ -64,14 +64,45 @@ class MainPage extends Page {
 
             this.onSortTypeChange(productsCardsBlock);
             this.onSearchProducts(productsCardsBlock, productQuantity);
+            this.filters.onChangeAllFilters(mainSection, () => this.rerenderCards(productsCardsBlock, productQuantity));
         });
         return this.container;
+    }
+    //
+    // onUrlChange(productsCardsBlock: Element | null): void {
+    //     window.addEventListener('popstate', () => {
+    //         console.log('window.location.search', window.location.search);
+    //         const searchParams = new URLSearchParams(window.location.search);
+    //         console.log('searchParams', searchParams);
+    //         (productsCardsBlock as HTMLElement).innerHTML = '';
+    //         for (const [key, value] of searchParams) {
+    //             console.log(key, value);
+    //         }
+    //     });
+    // }
+    //
+    // changeQueryParams(param: string, value: string, isDelete = false): void {
+    //     isDelete ? this.url.searchParams.delete(param) : this.url.searchParams.set(param, value);
+    //
+    //     window.history.pushState({ path: this.url.href }, '', this.url.href);
+    //     const popStateEvent = new PopStateEvent('popstate', { state: { path: this.url.href } });
+    //     dispatchEvent(popStateEvent);
+    // }
+
+    rerenderCards(productsCardsBlock: Element | null, productQuantity: Element | null): void {
+        this.foundedProducts = this.filters.getFilteredProducts(this.products);
+        (productsCardsBlock as HTMLElement).innerHTML = '';
+        this.foundedProducts.length === 0
+            ? this.productList.renderEmptyBlock(productsCardsBlock)
+            : this.productList.drawCards(productsCardsBlock, this.getSortedProducts());
+        this.setProductsQuantity(productQuantity);
     }
 
     onSortTypeChange(productsCardsBlock: Element | null): void {
         const sortOptions = document.querySelector('.sorting-select');
-        (sortOptions as HTMLElement).addEventListener('change', (event) => {
+        (sortOptions as HTMLElement)?.addEventListener('change', (event) => {
             this.sortType = (sortOptions as HTMLSelectElement).value;
+            // this.changeQueryParams('sort', this.sortType);
             (productsCardsBlock as HTMLElement).innerHTML = '';
             this.productList.drawCards(productsCardsBlock, this.getSortedProducts());
         });
@@ -79,23 +110,11 @@ class MainPage extends Page {
 
     onSearchProducts(productsCardsBlock: Element | null, productQuantity: Element | null): void {
         const productsSearch = document.querySelector('.products__search');
-        (productsSearch as HTMLElement).addEventListener('input', (event) => {
+        (productsSearch as HTMLElement)?.addEventListener('input', (event) => {
             const searchValue = (event.target as HTMLInputElement).value;
             (productsCardsBlock as HTMLElement).innerHTML = '';
-            if (searchValue !== '') {
-                this.foundedProducts = this.products.slice().filter((product) => {
-                    return product.title.toLowerCase().includes(searchValue.toLowerCase());
-                });
-
-                this.setProductsQuantity(productQuantity);
-                this.foundedProducts.length === 0
-                    ? this.productList.renderEmptyBlock(productsCardsBlock)
-                    : this.productList.drawCards(productsCardsBlock, this.getSortedProducts());
-            } else {
-                this.foundedProducts = this.products.slice();
-                this.productList.drawCards(productsCardsBlock, this.getSortedProducts());
-                this.setProductsQuantity(productQuantity);
-            }
+            this.filters.filtersArray.searchValue = searchValue;
+            this.rerenderCards(productsCardsBlock, productQuantity);
         });
     }
 
