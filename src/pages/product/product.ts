@@ -56,7 +56,9 @@ const createProductMarkup = ({
 };
 
 const createProductImagesMarkup = (image: string): string => {
-    return `<li class='product__content-image'><img src='${image}' alt='${image}' width='120px' height='80px'></li>`;
+    return `<li>
+               <img class='product__content-image' src='${image}' alt='${image}' width='120px' height='80px'>
+            </li>`;
 };
 
 class ProductPage extends Page {
@@ -79,6 +81,8 @@ class ProductPage extends Page {
             const productContentImages = productSection.querySelector('.product__content-images');
             const imagesMarkup = product.images.map((item: string) => createProductImagesMarkup(item)).join(`\n`);
             (productContentImages as HTMLElement).innerHTML = imagesMarkup;
+            const activeImage = (productContentImages as HTMLElement).querySelector('.product__content-image');
+            (activeImage as HTMLElement).classList.add('product__content-image--active');
             this.container.append(productSection);
             this.onProductImageClick(productSection);
             this.onBuyButtonClick(productSection);
@@ -92,9 +96,15 @@ class ProductPage extends Page {
         const mainImage = productSection.querySelector('.product__main-image');
         images.forEach((item) =>
             item.addEventListener('click', (event) => {
+                this.removeActiveImageClass(images);
                 (mainImage as HTMLImageElement).src = (event.target as HTMLImageElement)?.currentSrc;
+                item.classList.add('product__content-image--active');
             })
         );
+    }
+
+    removeActiveImageClass(images: NodeListOf<Element>): void {
+        images.forEach((element) => (element as HTMLElement).classList.remove('product__content-image--active'));
     }
 
     onBuyButtonClick(productSection: HTMLElement): void {
