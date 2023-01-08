@@ -101,11 +101,16 @@ class ProductPage extends Page {
         const buyButton = productSection.querySelector('.product__price-button-buy');
         (buyButton as HTMLElement).addEventListener('click', () => {
             this.popup.toggleCardPopup();
+            this.popup.onCardExpiredDateInput();
+            this.popup.onFormInput();
+            this.popup.submit();
         });
 
         const closePopupButton = document.querySelector('.popup-close');
         (closePopupButton as HTMLElement).addEventListener('click', () => {
             this.popup.toggleCardPopup();
+            this.popup.resetPopup();
+            this.popup.clearAllErrorMessages();
         });
     }
 }

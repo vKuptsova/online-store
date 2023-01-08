@@ -1,8 +1,13 @@
 import { FILTER_TYPE } from '../constants';
 
+export interface FilterWithQuantity {
+    value: string;
+    quantity: number;
+}
+
 export interface IFiltersOptions {
-    categories: string[];
-    brands: string[];
+    categories: FilterWithQuantity[];
+    brands: FilterWithQuantity[];
     price: Price;
     stock: Stock;
 }
@@ -27,3 +32,10 @@ export interface FiltersValues {
 
 export type FilterValue = FILTER_TYPE.CATEGORY | FILTER_TYPE.BRAND;
 export type FilterMultiRangeValue = FILTER_TYPE.PRICE | FILTER_TYPE.STOCK;
+
+export interface FiltersResultData {
+    category: Record<string, number>;
+    brand: Record<string, number>;
+    price: Price;
+    stock: Stock;
+}

@@ -72,28 +72,27 @@
             <div class='popup-inner'>
                 <form class='popup'>
                     <h3>Personal details</h3>
-                    <input type='text' placeholder='Name' required>
-                    <input type='tel' placeholder='Phone number' required>
-                    <input type='text' placeholder='Delivery address' required>
-                    <input type='email' placeholder='E-mail' required>
+                    <input class='popup-input card-name' type='text' placeholder='Name'>
+                    <input class='popup-input card-phone' type='tel' placeholder='Phone number'>
+                    <input class='popup-input card-address' type='text' placeholder='Delivery address'>
+                    <input class='popup-input card-email' type='email' placeholder='E-mail'>
                     <h3>Credit card details</h3>
                     <div class='popup-card'>
                         <div class='popup-card__number'>
-                            <img src='#'>
-                            <input type='text' placeholder='Card number' required>
+                            <input class='popup-input card-number' type='text' placeholder='Card number'>
                         </div>
                         <div class='popup-card__validate'>
-                            <div>
-                                <span>Valid</span>
-                                <input type='text' placeholder='Valid Thru' required>
+                            <div class='popup-card__date'>
+                                <span class='popup-card-desc'>Valid</span>
+                                <input class='popup-input card-valid' type='text' placeholder='Valid Thru'>
                             </div>
-                            <div>
-                                <span>Cvv</span>
-                                <input type='text' placeholder='Code' required>
+                            <div class='popup-card__cvv'>
+                                <span class='popup-card-desc'>Cvv</span>
+                                <input class='popup-input card-cvv' type='text' placeholder='Code'>
                             </div>
                         </div>
                     </div>
-                    <button class='popup-button' type='submit'>Confirm</button>
+                    <button class='popup-button popup-submit' type='submit'>Confirm</button>
                 </form>
                 <button class="popup-close" type="button" aria-label="Close"></button>
             </div>

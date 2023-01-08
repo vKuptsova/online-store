@@ -19,6 +19,13 @@
     list-style: none;
 }
 
+.filter-item {
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
 .filters__button {
     display: flex;
     justify-content: space-between;
@@ -81,6 +88,17 @@
     content: "$";
     top: 1px;
     left: -10px;
+}
+
+.filter-item__label {
+    width: 70%;
+    word-break: break-all;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.filter-item__quantity {
+    margin-left: auto;
 }
 
 .input-value {
@@ -221,3 +239,6 @@ input[type=range]::-moz-range-thumb {
     z-index: 10;
 }
 
+.not-active {
+    opacity: 0.6;
+}

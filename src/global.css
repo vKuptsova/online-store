@@ -269,13 +269,19 @@ body {
     background-color: #dde8f0;
 }
 
-.popup-card__number img {
-    margin-right: 10px;
+.popup-card__number {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+/*.popup-card__number img {*/
+/*    margin-right: 10px;*/
+/*}*/
 
 .popup-card__number input {
     width: 70%;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     cursor: pointer;
 }
 
@@ -286,12 +292,20 @@ body {
 .popup-card__validate {
     display: flex;
     flex-direction: row;
+    padding: 0 10px;
 }
 
-.popup-card__validate span {
+.popup-card-desc {
     margin-right: 5px;
     text-transform: uppercase;
     color: #9f8713;
+}
+
+.popup-card__date,
+.popup-card__cvv {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
 }
 
 .popup-button {
