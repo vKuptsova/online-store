@@ -1,0 +1,84 @@
+.items {
+    box-sizing: border-box;
+    border: 4px solid #97cbdc;
+    border-radius: 0 15px;
+    background-color: #001b48;
+    width: 100%;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    box-sizing: border-box;
+}
+
+.li-item {
+    flex: 1 0 20%;
+    min-width: 200px;
+    min-height: 160px;
+    max-width: 20%;
+    border: 2px solid #97cbdc;
+    border-radius: 0 15px;
+    background-color: #001b48;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: inherit;
+    margin: 5px;
+    font-size: 7px;
+    color:#001b48;
+    font-weight:bold;
+    list-style-type: none;
+    position: relative;
+}
+
+.li-item img{
+    min-width: 200px;
+    max-width: 20%;
+    height: 160px;
+    border-radius: 0 15px;
+}
+
+.product{
+    padding-top: 30px;
+    padding: 5px 10px;
+    border-radius: 0px 15px;
+	background: rgba(37,219,237,0.8);
+    max-width: 250px;
+    opacity: 0;
+    position: absolute;
+}
+
+.product p{
+    margin-top: 0.2em;
+    margin-bottom: 0.2em;
+}
+
+.li-item:hover .product, .li-item:hover .div-buttons{
+    opacity: 1;
+    transition: .5s ease;
+}
+
+.div-buttons button{
+    border: 2px solid #97cbdc;
+    border-radius: 0 15px;
+    background-color: #001b48;
+    color: #97cbdc;
+    height:20px;
+    width: 90px;
+    font-size: 10px;
+    cursor: pointer;
+}
+
+.div-buttons{
+    opacity: 0;
+    display: flex;
+    align-items: flex-end;
+    position: absolute;
+    bottom: 8px;
+    left: 16px;
+}
+
+.empty-list {
+    margin-top: 40px;
+    font-size: 28px;
+    color: #001b48;
+    text-align: center;
+}

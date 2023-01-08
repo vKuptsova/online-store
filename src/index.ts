@@ -5,3 +5,4 @@ import { PageIds } from './constants';
 const app = new App();
 app.run(PageIds.MainPage);
 app.toBasketPage();
+app.toMainPage();

@@ -2,7 +2,7 @@ import './sorting.css';
 import { SORTING_ITEMS } from '../../constants';
 
 const createSortingMarkup = (name: string) => {
-    return `<option value="${name}">${name}</option>`;
+    return `<option class="sort-value" value="${name}">${name}</option>`;
 };
 
 class Sorting {
@@ -11,6 +11,7 @@ class Sorting {
         sortBar.classList.add('sorting-bar');
         (nodeBlock as HTMLElement).prepend(sortBar);
         const sortingSelect = document.createElement('select');
+        sortingSelect.classList.add('sorting-select');
         sortBar.appendChild(sortingSelect);
 
         const sortingMarkup = SORTING_ITEMS.map((item) => createSortingMarkup(item)).join(`\n`);

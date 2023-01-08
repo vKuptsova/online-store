@@ -11,7 +11,7 @@ class App {
 
     constructor() {}
 
-    static renderNewPage(idPage: string) {
+    static renderNewPage(idPage: string, productId = '') {
         const currentPageHTML = document.querySelector(`#${App.defaultPageId}`);
         if (currentPageHTML) {
             currentPageHTML.remove();
@@ -21,7 +21,7 @@ class App {
         if (idPage === PageIds.MainPage) {
             page = new MainPage(idPage);
         } else if (idPage === PageIds.ProductPage) {
-            page = new ProductPage(idPage);
+            page = new ProductPage(idPage, productId);
         } else if (idPage === PageIds.BasketPage) {
             page = new BasketPage(idPage);
         } else {
@@ -38,21 +38,37 @@ class App {
 
     private enableRouteChange() {
         window.addEventListener('hashchange', () => {
-            const hash = window.location.hash.slice(1);
-            App.renderNewPage(hash);
+            const location = window.location.hash.slice(1);
+            const hash = location.split('/')[0];
+            const productId = location.split('/')[1] || '';
+            App.renderNewPage(hash, productId);
         });
     }
 
     public toBasketPage(): void {
         const basketLink = document.querySelector('.header_basket-link');
         (basketLink as HTMLElement).addEventListener('click', () => {
-            this.run(PageIds.BasketPage);
+            window.location.hash = PageIds.BasketPage;
+            App.renderNewPage(PageIds.BasketPage);
         });
     }
 
-    public run(id: string): void {
-        App.renderNewPage(id);
-        window.location.hash = id;
+    public toMainPage(): void {
+        const mainPageLink = document.querySelector('.header_link');
+        (mainPageLink as HTMLElement).addEventListener('click', () => {
+            window.location.hash = PageIds.MainPage;
+            App.renderNewPage(PageIds.MainPage);
+        });
+    }
+
+    public run(id: string, productId?: string): void {
+        App.renderNewPage(id, productId);
+        if (productId) {
+            window.location.hash = `${id}/${productId}`;
+        } else {
+            window.location.hash = id;
+        }
+
         this.enableRouteChange();
     }
 }
