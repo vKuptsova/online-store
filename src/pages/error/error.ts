@@ -1,4 +1,5 @@
 import Page from '../../templates/page';
+import './error.css';
 
 export const enum ErrorTypes {
     Error_404 = 404,
@@ -13,8 +14,10 @@ class ErrorPage extends Page {
     }
 
     render() {
-        const title = "'404': 'Error! The page was not found.'";
-        this.container.append(title);
+        const errorBlock = document.createElement('div');
+        (errorBlock as HTMLElement).classList.add('error-page');
+        (errorBlock as HTMLElement).innerHTML = `<h2>Error! The page was not found.</h2>`;
+        this.container.append(errorBlock);
         return this.container;
     }
 }

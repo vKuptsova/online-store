@@ -28,3 +28,18 @@ export const enum FILTER_TYPE {
     PRICE = 'price',
     STOCK = 'stock',
 }
+
+export const ERROR_MESSAGE = {
+    NAME: 'Name should contain 2 words with lenght min 3 symbol for each',
+    PHONE: 'Invalid phone number. Example: +XXX XXX XXXXX',
+    ADDRESS: 'Name should contain 3 words with lenght min 5 symbol for each',
+    MAIl: 'Invalid e-mail',
+    CARD_NUMBER: 'Should contains 16 numbers',
+    CARD_EXPIRED_DATE: 'Should not be empty',
+    CARD_CVV: 'Should contains only 3 numbers',
+};
+
+export const PHONE_REG_EXP = '(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})?[-. )]*(\\d{3})[-. ]*(\\d{4,5})(?: *x(\\d+))?';
+export const MAIL_REG_EXP = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
+export const CARD_REG_EXP = /[0-9]{16}/;
+export const ONLY_DIGITS = /^\d+$/;
