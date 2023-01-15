@@ -29,7 +29,7 @@
     position: relative;
 }
 
-.li-item img{
+.picture-item img{
     min-width: 200px;
     max-width: 20%;
     height: 160px;
@@ -51,7 +51,8 @@
     margin-bottom: 0.2em;
 }
 
-.li-item:hover .product, .li-item:hover .div-buttons{
+.li-item:hover .product, 
+.li-item:hover .div-buttons{
     opacity: 1;
     transition: .5s ease;
 }
@@ -62,9 +63,12 @@
     background-color: #001b48;
     color: #97cbdc;
     height:20px;
-    width: 90px;
     font-size: 10px;
     cursor: pointer;
+}
+
+.button-add {
+    width: 120px;
 }
 
 .div-buttons{
