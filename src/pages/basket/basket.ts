@@ -30,7 +30,7 @@ const createBasketItemMarkup = ({
             <div class="item-info">
                 <div class='image-basket'><img src='${images[0]}' alt='${title}'></div>
                 <div class='main-product-info'>
-                    <p>${title}</p>
+                    <p class="title-item-basket">${title}</p>
                     <hr>
                     <div class="item-descriptions">
                         <p>${description}</p>
@@ -83,12 +83,13 @@ class BasketPage extends Page {
 
         if (localStorage.length > 0){
             for (let i = 0; i < localStorage.length; i++) {
-                if (/(cart)/.test(String(localStorage.key(i))) === true) {
+                if (/(cart [0-9])/.test(String(localStorage.key(i))) === true) {
                     this.api.getProductById(`${localStorage.getItem(String(localStorage.key(i)))}`).then((product) => {
                         ulBasketList.innerHTML += createBasketItemMarkup(product);
                         headerCount.getHeaderBasket();
                         headerCount.getHeaderSumBasket();
                         this.onButtonsPlusMinusClick(ulBasketList);
+                        this.drawInfoCountItem(ulBasketList);
                     });
                 }
             }
@@ -110,16 +111,20 @@ class BasketPage extends Page {
         const arrayButtonsMinus = Array.from(buttonsMinus as NodeListOf<HTMLElement>);
         const stock = mainBlock?.querySelectorAll('.stock-basket');
         const arrayStock = Array.from(stock as NodeListOf<HTMLElement>);
+        const titles = mainBlock?.querySelectorAll('.title-item-basket');
+        const arrayTitle = Array.from(titles as NodeListOf<HTMLElement>);
+        
 
         arrayButtonsPlus.forEach((button) =>
             button.addEventListener('click', () => {
                 const buttonId = arrayButtonsPlus.indexOf(button);
                 const basketItemPrice = arrayBasketPrices[buttonId].textContent;
                 const choosenNumberItem = arrayNumberItems[buttonId];
-                localStorage.setItem(`cart basket ${buttonId}`, String(buttonId));
-                localStorage.setItem(`price basket ${buttonId}`, String(basketItemPrice));
+                localStorage.setItem(`cart basket ${arrayTitle[buttonId].textContent} ${String(String(Number(choosenNumberItem.textContent) + 1))}`, String(buttonId));
+                localStorage.setItem(`price basket ${arrayTitle[buttonId].textContent} ${String(String(Number(choosenNumberItem.textContent) + 1))}`, String(basketItemPrice));
                 if (Number(choosenNumberItem.textContent) < Number(String((arrayStock[buttonId].textContent)).slice(7))) {
-                    choosenNumberItem.innerHTML = String(Number(choosenNumberItem.textContent) + 1);
+                    localStorage.setItem(`choosenNumberItem ${buttonId}`, String(Number(choosenNumberItem.textContent) + 1));
+                    choosenNumberItem.innerHTML = String(localStorage.getItem(`choosenNumberItem ${buttonId}`));
                 }
                 headerCount.getHeaderBasket();
                 headerCount.getHeaderSumBasket();
@@ -130,16 +135,31 @@ class BasketPage extends Page {
             button.addEventListener('click', () => {
                 const buttonId = arrayButtonsMinus.indexOf(button);
                 const choosenNumberItem = arrayNumberItems[buttonId];
-                localStorage.removeItem(`cart basket ${buttonId}`);
-                localStorage.removeItem(`price basket ${buttonId}`);
-                if(Number(choosenNumberItem.textContent) > 0){
-                    choosenNumberItem.innerHTML = String(Number(choosenNumberItem.textContent) - 1);
+                localStorage.removeItem(`cart basket ${arrayTitle[buttonId].textContent} ${String(String(Number(choosenNumberItem.textContent)))}`);
+                localStorage.removeItem(`price basket ${arrayTitle[buttonId].textContent} ${String(String(Number(choosenNumberItem.textContent)))}`);
+                if(Number(choosenNumberItem.textContent) > 1){
+                    localStorage.setItem(`choosenNumberItem ${buttonId}`, String(Number(choosenNumberItem.textContent) - 1));
+                    choosenNumberItem.innerHTML = String(Number(localStorage.getItem(`choosenNumberItem ${buttonId}`)));
                 }
                 headerCount.getHeaderBasket();
                 headerCount.getHeaderSumBasket();
-        
             })
         );
+    }
+
+    drawInfoCountItem(mainBlock: Element | null): void {
+        const numberItems = mainBlock?.querySelectorAll('.number-items');
+        const arrayNumberItems = Array.from(numberItems as NodeListOf<HTMLElement>);
+
+        if (localStorage.length > 0) {
+            arrayNumberItems.forEach((count) => {
+                for (let i = 0; i < localStorage.length; i++) {
+                    if (localStorage.key(i) === `choosenNumberItem ${arrayNumberItems.indexOf(count)}`) {
+                        count.innerHTML = String(Number(localStorage.getItem(`choosenNumberItem ${arrayNumberItems.indexOf(count)}`)));
+                    }
+                }
+            });
+        }
     }
 
 }
