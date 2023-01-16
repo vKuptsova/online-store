@@ -1,5 +1,13 @@
 import './popup.css';
-import { CARD_REG_EXP, ERROR_MESSAGE, MAIL_REG_EXP, ONLY_DIGITS, PageIds, PHONE_REG_EXP } from '../../constants';
+import {
+    CARD_REG_EXP,
+    ERROR_MESSAGE,
+    MAIL_REG_EXP,
+    ONLY_DIGITS,
+    ONLY_NUMERICAL_VALUES,
+    PageIds,
+    PHONE_REG_EXP,
+} from '../../constants';
 
 class Popup {
     toggleCardPopup(): void {
@@ -63,7 +71,7 @@ class Popup {
 
         const cardCvvInput = document.querySelector('.card-cvv');
         const cardCvvValue = (cardCvvInput as HTMLInputElement).value;
-        const isCardCvvValid = cardCvvValue.match(ONLY_DIGITS) && cardCvvValue.length === 3;
+        const isCardCvvValid = !!cardCvvValue.match(ONLY_DIGITS) && cardCvvValue.length === 3;
 
         if (!isNameValid) {
             this.setErrorMessage(nameInput, ERROR_MESSAGE.NAME);
@@ -89,7 +97,7 @@ class Popup {
             this.setErrorMessage(cardValidInput, ERROR_MESSAGE.CARD_EXPIRED_DATE);
         }
 
-        if (!cardCvvValue) {
+        if (!isCardCvvValid) {
             this.setErrorMessage(cardCvvInput, ERROR_MESSAGE.CARD_CVV);
         }
 
@@ -102,6 +110,20 @@ class Popup {
             !!cardValidValue &&
             !!isCardCvvValid
         );
+    }
+
+    onNumbersFieldInput(): void {
+        const phoneInput = document.querySelector('.card-phone');
+        const cardNumberInput = document.querySelector('.card-number');
+        this.allowOnlyNumbers(phoneInput);
+        this.allowOnlyNumbers(cardNumberInput);
+    }
+
+    allowOnlyNumbers(input: Element | null): void {
+        (input as HTMLInputElement).addEventListener('input', (event) => {
+            const inputValue = (event.target as HTMLInputElement).value;
+            (event.target as HTMLInputElement).value = inputValue.replace(ONLY_NUMERICAL_VALUES, '');
+        });
     }
 
     onCardExpiredDateInput(): void {
