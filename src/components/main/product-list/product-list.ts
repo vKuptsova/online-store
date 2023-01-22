@@ -1,9 +1,12 @@
 import { IProduct } from '../../../types/product.model';
 import './product-list.css';
 import { PageIds } from '../../../constants';
-
+import headerCounter from '../../header/headerCounts';
+const headerCount = new headerCounter;
 class ProductList {
     drawCards(element: Element | null, products: IProduct[]): void {
+        headerCount.getHeaderBasket();
+        headerCount.getHeaderSumBasket();
         const ulProducts = document.createElement('ul');
         ulProducts.classList.add('items');
         (element as HTMLElement).append(ulProducts);
@@ -29,20 +32,104 @@ class ProductList {
             divButtons.innerHTML = `<button class="button-add">ADD TO CART</button><button class="button-details">DETAILS</button>`;
             liItem.appendChild(divButtons);
             divButtons.classList.add('div-buttons');
-            liItem.innerHTML += `<img src="${product.images[0]}" alt="image">`;
+            liItem.innerHTML += `<div class="picture-item"><img src="${product.images[0]}" alt="image"></div>`;
         });
 
         this.onCardClick(ulProducts);
+        this.onButtonClick(ulProducts);
+        this.drawButtonStyle(ulProducts);
     }
 
     onCardClick(mainBlock: Element | null): void {
+
+        //добавить клик по инфе с переходом
         const cards = mainBlock?.querySelectorAll('.li-item');
-        (cards as NodeListOf<HTMLElement>).forEach((card) =>
-            card.addEventListener('click', () => {
-                const cardId = card.getAttribute('data-value');
+        const arrayCards = Array.from(cards as NodeListOf<HTMLElement>);
+
+        const buttons = mainBlock?.querySelectorAll('.button-details');
+        const arrayBasket = Array.from(buttons as NodeListOf<HTMLElement>);
+
+        const description = mainBlock?.querySelectorAll('.product');
+        const arrayDescription = Array.from(description as NodeListOf<HTMLElement>);
+
+        arrayBasket.forEach((button) =>
+            button.addEventListener('click', () => {
+                const buttonId = arrayBasket.indexOf(button);
+                const cardId = arrayCards[buttonId].getAttribute('data-value');
                 window.location.hash = `${PageIds.ProductPage}/${cardId}`;
             })
         );
+
+        arrayDescription.forEach((desc) =>
+            desc.addEventListener('click', () => {
+                const descId = arrayDescription.indexOf(desc);
+                const cardId = arrayCards[descId].getAttribute('data-value');
+                window.location.hash = `${PageIds.ProductPage}/${cardId}`;
+            })
+        );
+
+    }
+
+    onButtonClick(mainBlock: Element | null): void {
+
+        headerCount.getHeaderBasket();
+        headerCount.getHeaderSumBasket();
+        const buttons = mainBlock?.querySelectorAll('.button-add');
+        const arrayBasket = Array.from(buttons as NodeListOf<HTMLElement>);
+
+        const cards = mainBlock?.querySelectorAll('.li-item');
+        const arrayCards = Array.from(cards as NodeListOf<HTMLElement>);
+
+        const prices = mainBlock?.querySelectorAll('.price');
+        const arrayPrice = Array.from(prices as NodeListOf<HTMLElement>);
+
+
+        arrayBasket.forEach((button) =>
+            button.addEventListener('click', () => {
+                const buttonId = arrayBasket.indexOf(button);
+                const cardId = arrayCards[buttonId].getAttribute('data-value');
+                const price = arrayPrice[buttonId].textContent;
+
+                if (button.classList.contains("choosen") === false){
+                    
+                    localStorage.setItem(`cart ${cardId}`, String(cardId));
+                    localStorage.setItem(`price ${cardId}`, String(price));
+                    button.classList.add("choosen");
+                    button.textContent = 'DROP FROM CART';
+                    headerCount.getHeaderBasket();
+                    headerCount.getHeaderSumBasket();
+                } else {
+
+                    button.classList.remove("choosen");
+                    button.textContent = 'ADD TO CART';
+                    localStorage.removeItem(`cart ${cardId}`);
+                    localStorage.removeItem(`price ${cardId}`);
+                    headerCount.getHeaderBasket();
+                    headerCount.getHeaderSumBasket();
+                }
+
+            })
+        );
+    }
+
+    drawButtonStyle(mainBlock: Element | null): void {
+        const buttons = mainBlock?.querySelectorAll('.button-add');
+        const arrayBasket = Array.from(buttons as NodeListOf<HTMLElement>);
+        const cards = mainBlock?.querySelectorAll('.li-item');
+        const arrayCards = Array.from(cards as NodeListOf<HTMLElement>);
+
+        if (localStorage.length > 0) {
+            arrayBasket.forEach((button) => {
+                const buttonId = arrayBasket.indexOf(button);
+                const cardId = arrayCards[buttonId].getAttribute('data-value');
+                for (let i = 0; i < localStorage.length; i++) {
+                    if (localStorage.key(i) === `cart ${cardId}`) {
+                        button.classList.add("choosen");
+                        button.textContent = 'DROP FROM CART';
+                    }
+                }
+            });
+        }
     }
 
     renderEmptyBlock(element: Element | null): void {

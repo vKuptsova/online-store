@@ -6,6 +6,7 @@ import { IProduct } from '../../types/product.model';
 import Filters from '../../components/filters/filter';
 import Page from '../../templates/page';
 import { SORT_TYPE } from '../../constants';
+import headerCounter from '../../components/header/headerCounts';
 
 const createProductsBlockMarkup = () => {
     return `<div class="products__header">
@@ -27,6 +28,8 @@ class MainPage extends Page {
 
     public sortType = SORT_TYPE.PRICE_ASC;
 
+    public headerCounter: headerCounter;
+
     constructor(id: string) {
         super(id);
         this.filters = new Filters();
@@ -35,6 +38,7 @@ class MainPage extends Page {
         this.products = [];
         this.foundedProducts = [];
         this.productList = new ProductList();
+        this.headerCounter = new headerCounter();
     }
 
     getDataForMainPage() {
@@ -64,6 +68,8 @@ class MainPage extends Page {
             this.onSortTypeChange(productsCardsBlock);
             this.onSearchProducts(productsCardsBlock, productQuantity);
             this.filters.onChangeAllFilters(mainSection, () => this.rerenderCards(productsCardsBlock, productQuantity));
+            this.headerCounter.getHeaderBasket();
+            this.headerCounter.getHeaderSumBasket();
         });
         return this.container;
     }
