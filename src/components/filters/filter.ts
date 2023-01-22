@@ -1,8 +1,10 @@
 import './filter.css';
 import {
     FilterMultiRangeValue,
+    FiltersResultData,
     FiltersValues,
     FilterValue,
+    FilterWithQuantity,
     IFiltersOptions,
     Price,
     Stock,
@@ -27,10 +29,11 @@ const createFiltersMainMarkup = () => {
             <div class="filters__stock"></div>`;
 };
 
-const createFilterMarkup = (name: string) => {
+const createFilterMarkup = ({ value, quantity }: FilterWithQuantity) => {
     return `<li class="filter-item">
-             <input id="filter-${name}" class="filter-item__input" type="checkbox" value="${name}">
-             <label class="filter-item__label" for="filter-${name}">${name}</label>
+             <input id="filter-${value}" class="filter-item__input" type="checkbox" value="${value}">
+             <label class="filter-item__label" for="filter-${value}">${value}</label>
+             <span class="filter-item__quantity"><span class="filter-item__founded">${quantity}</span> / ${quantity}</span>
         </li>`;
 };
 
@@ -66,11 +69,15 @@ class Filters {
     public filtersArray: FiltersValues;
     public price: Price;
     public stock: Stock;
+    public priceBlock: Element | null;
+    public stockBlock: Element | null;
 
     constructor() {
         this.filtersArray = INIT_FILTERS_VALUE;
         this.price = INIT_FILTERS_VALUE.price;
         this.stock = INIT_FILTERS_VALUE.stock;
+        this.priceBlock = null;
+        this.stockBlock = null;
     }
     init({ categories, brands, price, stock }: IFiltersOptions, mainBlock: Element | null): void {
         this.price = price;
@@ -90,15 +97,15 @@ class Filters {
 
         const filtersCategoryList = (mainBlock as HTMLElement).querySelector('.filters-list--category');
         const filtersBrandList = (mainBlock as HTMLElement).querySelector('.filters-list--brand');
-        const filtersPriceBlock = (mainBlock as HTMLElement).querySelector('.filters__price');
-        const filtersStockBlock = (mainBlock as HTMLElement).querySelector('.filters__stock');
+        this.priceBlock = (mainBlock as HTMLElement).querySelector('.filters__price');
+        this.stockBlock = (mainBlock as HTMLElement).querySelector('.filters__stock');
 
-        const filtersCategoryMarkup = categories.map((name) => createFilterMarkup(name)).join(`\n`);
-        const filtersBrandsMarkup = brands.map((name) => createFilterMarkup(name)).join(`\n`);
+        const filtersCategoryMarkup = categories.map((filterValue) => createFilterMarkup(filterValue)).join(`\n`);
+        const filtersBrandsMarkup = brands.map((filterValue) => createFilterMarkup(filterValue)).join(`\n`);
         (filtersCategoryList as HTMLElement).innerHTML = filtersCategoryMarkup;
         (filtersBrandList as HTMLElement).innerHTML = filtersBrandsMarkup;
-        (filtersPriceBlock as HTMLElement).innerHTML = createRangeSliderMarkup(price.min, price.max, true);
-        (filtersStockBlock as HTMLElement).innerHTML = createRangeSliderMarkup(stock.min, stock.max, false);
+        (this.priceBlock as HTMLElement).innerHTML = createRangeSliderMarkup(price.min, price.max, true);
+        (this.stockBlock as HTMLElement).innerHTML = createRangeSliderMarkup(stock.min, stock.max, false);
     }
 
     onRangeInputsChange(mainBlock: Element | null, callback: () => void): void {
@@ -164,8 +171,8 @@ class Filters {
 
     onChangeFilters(type: FilterValue, callback: () => void): void {
         const filterBlock = document.querySelector(`.filters__${type}`);
-        (filterBlock as HTMLElement).addEventListener('change', (event) => {
-            const filterValue = (event.target as HTMLInputElement).value.toLowerCase();
+        (filterBlock as HTMLElement)?.addEventListener('change', (event) => {
+            const filterValue = (event.target as HTMLInputElement).value;
             this.filtersArray[type].includes(filterValue)
                 ? this.filtersArray[type].splice(this.filtersArray[type].indexOf(filterValue), 1)
                 : this.filtersArray[type].push(filterValue);
@@ -173,16 +180,26 @@ class Filters {
         });
     }
 
-    nameFilterValue(product: IProduct, name: string): boolean {
-        return name === '' ? true : product.title.toLowerCase().includes(name.toLowerCase());
+    searchFilterValue(product: IProduct, value: string): boolean {
+        return value === ''
+            ? true
+            : product.title.toLowerCase().includes(value.toLowerCase()) ||
+                  product.brand.toLowerCase().includes(value.toLowerCase()) ||
+                  product.category.toLowerCase().includes(value.toLowerCase()) ||
+                  product.description.toLowerCase().includes(value.toLowerCase()) ||
+                  product.category.toLowerCase().includes(value.toLowerCase()) ||
+                  (product.stock + '').includes(value) ||
+                  (product.discountPercentage + '').includes(value) ||
+                  (product.price + '').includes(value) ||
+                  (product.rating + '').includes(value);
     }
 
     categoryFilterValue(product: IProduct, category: string[]): boolean {
-        return !category.length ? true : category.includes(product.category.toLowerCase());
+        return !category.length ? true : category.includes(product.category);
     }
 
     brandsFilterValue(product: IProduct, brands: string[]): boolean {
-        return !brands.length ? true : brands.includes(product.brand.toLowerCase());
+        return !brands.length ? true : brands.includes(product.brand);
     }
 
     priceFilterValue(product: IProduct, price: Price): boolean {
@@ -196,7 +213,7 @@ class Filters {
     getFilteredProducts(products: IProduct[]): IProduct[] {
         let filteredProducts = products.slice().filter((product) => {
             return (
-                this.nameFilterValue(product, this.filtersArray.searchValue) &&
+                this.searchFilterValue(product, this.filtersArray.searchValue) &&
                 this.categoryFilterValue(product, this.filtersArray.category) &&
                 this.brandsFilterValue(product, this.filtersArray.brand) &&
                 this.priceFilterValue(product, this.filtersArray.price) &&
@@ -209,9 +226,7 @@ class Filters {
 
     onResetFiltersClick(callback: () => void): void {
         const resetFilters = document.querySelector('.button-filter--reset');
-        const priceBlock = document.querySelector('.filters__price');
-        const stockBlock = document.querySelector('.filters__stock');
-        (resetFilters as HTMLButtonElement).addEventListener('click', () => {
+        (resetFilters as HTMLButtonElement)?.addEventListener('click', () => {
             this.filtersArray = {
                 ...this.filtersArray,
                 category: [],
@@ -220,18 +235,22 @@ class Filters {
                 stock: this.stock,
             };
 
-            this.clearMultiRangeInputValue(priceBlock, FILTER_TYPE.PRICE);
-            this.clearMultiRangeInputValue(stockBlock, FILTER_TYPE.STOCK);
+            this.updateMultiRangeInputValue(this.priceBlock, this.filtersArray[FILTER_TYPE.PRICE]);
+            this.updateMultiRangeInputValue(this.stockBlock, this.filtersArray[FILTER_TYPE.STOCK]);
 
             callback();
         });
     }
 
-    clearMultiRangeInputValue(parentElement: Element | null, filterMultiRangeValue: FilterMultiRangeValue): void {
+    updateMultiRangeInputValue(parentElement: Element | null, value: Stock): void {
+        const minPriceInput = (parentElement as HTMLElement).querySelector('.input-range-min');
+        const maxPriceInput = (parentElement as HTMLElement).querySelector('.input-range-max');
         const minPrice = (parentElement as HTMLElement).querySelector('.input-value-min');
         const maxPrice = (parentElement as HTMLElement).querySelector('.input-value-max');
-        (minPrice as HTMLElement).innerText = this.filtersArray[filterMultiRangeValue].min.toString();
-        (maxPrice as HTMLElement).innerText = this.filtersArray[filterMultiRangeValue].max.toString();
+        (maxPriceInput as HTMLInputElement).value = `${value.max}`;
+        (minPriceInput as HTMLInputElement).value = `${value.min}`;
+        (minPrice as HTMLElement).innerText = `${value.min}`;
+        (maxPrice as HTMLElement).innerText = `${value.max}`;
     }
 
     onChangeAllFilters(mainSection: Element | null, callback: () => void): void {
@@ -239,6 +258,33 @@ class Filters {
         this.onChangeFilters(FILTER_TYPE.BRAND, callback);
         this.onRangeInputsChange(mainSection, callback);
         this.onResetFiltersClick(callback);
+    }
+
+    updateFiltersQuantity(filtersQuantity: FiltersResultData): void {
+        const categoryBlock = document.querySelector('.filters__category');
+        const categoryItems = (categoryBlock as HTMLElement).querySelectorAll('.filter-item');
+        const brandBlock = document.querySelector('.filters__brand');
+        const brandItems = (brandBlock as HTMLElement).querySelectorAll('.filter-item');
+        this.updateMultiRangeInputValue(this.priceBlock, filtersQuantity.price);
+        this.updateMultiRangeInputValue(this.stockBlock, filtersQuantity.stock);
+        this.updateFilterItemQuantity(categoryItems, filtersQuantity.category);
+        this.updateFilterItemQuantity(brandItems, filtersQuantity.brand);
+    }
+
+    updateFilterItemQuantity(items: NodeListOf<Element>, filters: Record<string, number>): void {
+        items.forEach((item) => {
+            const filterInput = (item as HTMLElement).querySelector('.filter-item__input');
+            const quantity = (item as HTMLElement).querySelector('.filter-item__founded');
+            const filerValue = (filterInput as HTMLInputElement).value;
+
+            if (Object.keys(filters).includes(filerValue)) {
+                (quantity as HTMLElement).innerText = filters[filerValue].toString();
+                item.classList.remove('not-active');
+            } else {
+                (quantity as HTMLElement).innerText = '0';
+                item.classList.add('not-active');
+            }
+        });
     }
 }
 

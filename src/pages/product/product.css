@@ -39,7 +39,7 @@
 .product__content-images li img {
     margin: 0 0 5px 0;
     padding: 0;
-    border: 2px solid #001b48;
+    border: 3px solid #001b48;
     border-radius: 15px;
     cursor: pointer;
 }
@@ -119,4 +119,8 @@
     top: 5px;
     left: 0;
     font-size: 40px;
+}
+
+.product__content-images li .product__content-image--active {
+    border: 3px solid #cea53d;
 }

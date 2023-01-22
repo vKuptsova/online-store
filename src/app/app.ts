@@ -36,13 +36,21 @@ class App {
         }
     }
 
-    private enableRouteChange() {
+    private enableRouteChange(): void {
         window.addEventListener('hashchange', () => {
-            const location = window.location.hash.slice(1);
-            const hash = location.split('/')[0];
-            const productId = location.split('/')[1] || '';
-            App.renderNewPage(hash, productId);
+            const locationData = this.getLocationData();
+            App.renderNewPage(locationData.hash, locationData.productId);
         });
+    }
+
+    public getLocationData(): { hash: string; productId?: string } {
+        const location = window.location.hash.slice(1);
+        const hash = location.split('/')[0];
+        const productId = location.split('/')[1] || '';
+        return {
+            hash,
+            productId,
+        };
     }
 
     public toBasketPage(): void {
