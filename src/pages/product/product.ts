@@ -112,6 +112,7 @@ class ProductPage extends Page {
         (buyButton as HTMLElement).addEventListener('click', () => {
             this.popup.toggleCardPopup();
             this.popup.onCardExpiredDateInput();
+            this.popup.onNumbersFieldInput();
             this.popup.onFormInput();
             this.popup.submit();
         });

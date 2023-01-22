@@ -72,10 +72,23 @@
             <div class='popup-inner'>
                 <form class='popup'>
                     <h3>Personal details</h3>
-                    <input class='popup-input card-name' type='text' placeholder='Name'>
-                    <input class='popup-input card-phone' type='tel' placeholder='Phone number'>
-                    <input class='popup-input card-address' type='text' placeholder='Delivery address'>
-                    <input class='popup-input card-email' type='email' placeholder='E-mail'>
+                    <div class='input-block'>
+                        <label class='popup-label' for='name-field'>Name</label>
+                        <input class='popup-input card-name' id='name-field' type='text' placeholder='Ivan Petrov'>
+                    </div>
+                    <div class='input-block'>
+                        <label class='popup-label' for='phone-field'>Phone</label>
+                        <input class='popup-input card-phone' id='phone-field' type='tel'  placeholder='80291212123'>
+                    </div>
+                    <div class='input-block'>
+                        <label class='popup-label' for='address-field'>Address</label>
+                        <input class='popup-input card-address' id='address-field' type='text' placeholder='23 Kolasa street, Minsk'>
+                    </div>
+                    <div class='input-block'>
+                        <label class='popup-label' for='email-field'>Email</label>
+                        <input class='popup-input card-email' id='email-field' type='email' placeholder='Example@gmail.com'>
+                    </div>
+
                     <h3>Credit card details</h3>
                     <div class='popup-card'>
                         <div class='popup-card__number'>

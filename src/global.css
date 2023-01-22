@@ -229,6 +229,7 @@ body {
 
 .popup {
     width: 100%;
+    padding: 0 20px;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -250,7 +251,7 @@ body {
     text-align: center;
     border: 2px solid #97cbdc;
     border-radius: 10px;
-    width: 50%;
+    width: 70%;
     cursor: pointer;
 }
 
@@ -259,7 +260,7 @@ body {
 }
 
 .popup-card {
-    width: 80%;
+    width: 100%;
     margin-bottom: 20px;
     padding: 20px 0;
     display: flex;
@@ -274,10 +275,6 @@ body {
     flex-direction: column;
     align-items: center;
 }
-
-/*.popup-card__number img {*/
-/*    margin-right: 10px;*/
-/*}*/
 
 .popup-card__number input {
     width: 70%;
@@ -306,6 +303,11 @@ body {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
+}
+
+.popup-card__date input,
+.popup-card__cvv  input {
+    width: 50%;
 }
 
 .popup-button {
@@ -357,3 +359,14 @@ body {
     transform: rotate(-45deg);
 }
 
+.input-block {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    box-sizing: border-box;
+}
+
+.popup-label {
+    width: 80px;
+    margin-right: 20px;
+}
