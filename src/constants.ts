@@ -29,8 +29,6 @@ export const enum FILTER_TYPE {
     STOCK = 'stock',
 }
 
-}
-
 export const ERROR_MESSAGE = {
     NAME: 'Name should contain 2 words with lenght min 3 symbol for each',
     PHONE: 'Invalid phone number. Example: XXX XXX XXXXX',
